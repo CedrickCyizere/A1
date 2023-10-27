@@ -1,0 +1,12 @@
+1
+10
+2
+3
+5
+7
+bike
+boat
+car
+hous
+scooter
+truck
