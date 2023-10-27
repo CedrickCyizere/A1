@@ -24,5 +24,5 @@ def process_files(input_dir, output_dir):
             for word in sorted(words, reverse=True):
                 f.write(word + '\n')
 
-# Call the function with your directories
-process_files('path_to_your_input_directory', 'path_to_your_output_directory')
+# Call the function to directories
+process_files('directory', 'directory')
