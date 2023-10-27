@@ -1,28 +1,44 @@
 import os
 import collections
+import sys
 
 def process_files(input_dir, output_dir):
     # Ensure output directory exists
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
+    # Initialize lists to store filenames and terms
+    filenames = []
+    terms = []
+
     # Process each file in the input directory
     for filename in os.listdir(input_dir):
         with open(os.path.join(input_dir, filename), 'r') as f:
             words = f.read().split()
+            # Add words to terms list
+            terms.extend(words)
+        # Add filename to filenames list
+        filenames.append(filename)
 
-        # Calculate frequency distribution
-        freq_dist = collections.Counter(words)
+    # Remove duplicates from terms list
+    terms = list(set(terms))
 
-        # Write frequency distribution to file
-        with open(os.path.join(output_dir, filename + '_freq.txt'), 'w') as f:
-            for word, freq in freq_dist.items():
-                f.write(f'{word}: {freq}\n')
+    # Write sorted filenames to file
+    with open(os.path.join(output_dir, 'sorted_documents.txt'), 'w') as f:
+        for filename in sorted(filenames):
+            f.write(filename + '\n')
 
-        # Write sorted words to file
-        with open(os.path.join(output_dir, filename + '_sorted.txt'), 'w') as f:
-            for word in sorted(words, reverse=True):
-                f.write(word + '\n')
+    # Write sorted terms to file
+    with open(os.path.join(output_dir, 'sorted_terms.txt'), 'w') as f:
+        for term in sorted(terms):
+            f.write(term + '\n')
 
-# Call the function to directories
-process_files('directory', 'directory')
+if __name__ == "__main__":
+    # Check that the user has provided input and output directories
+    if len(sys.argv) != 3:
+        print("Usage: python script.py <input_dir> <output_dir>")
+        sys.exit(1)
+
+    # Call the function with user-provided directories
+    process_files(sys.argv[1], sys.argv[2])
+
